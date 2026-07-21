@@ -48,7 +48,7 @@ jobs:
 
       - name: Run JSHint on database directory
         run: |
-          find database -name "*.js" -exec npx jshint {} \;
+          find server/database -name "*.js" -exec npx jshint {} \;
 
       - name: Success message
         run: echo "JavaScript linting completed successfully"
