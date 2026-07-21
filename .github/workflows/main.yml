@@ -1,0 +1,54 @@
+name: 'Lint Code'
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  lint_python:
+    name: Lint Python Files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install flake8
+
+      - name: Run flake8 on server directory
+        run: |
+          find server -name "*.py" -exec flake8 {} \;
+
+      - name: Success message
+        run: echo "Python linting completed successfully"
+
+  lint_function_js:
+    name: Lint JavaScript Files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+
+      - name: Install JSHint
+        run: |
+          npm install jshint
+
+      - name: Run JSHint on database directory
+        run: |
+          find database -name "*.js" -exec npx jshint {} \;
+
+      - name: Success message
+        run: echo "JavaScript linting completed successfully"
